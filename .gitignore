@@ -138,6 +138,10 @@ celerybeat.pid
 .env
 .envrc
 .venv
+.auth-venv
+.gateway-venv
+.translation-venv
+.user-venv
 env/
 venv/
 ENV/
