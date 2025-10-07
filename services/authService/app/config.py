@@ -13,6 +13,7 @@ class Config:
 class DevConfig(Config):
     SECRET_KEY: str = os.getenv("DEV_SECRET_KEY")
     ALGORITHM: str = os.getenv("ALGORITHM")
+    DATABASE_URL: str = os.getenv("DEV_DATABASE_URL")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
 
 

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from services.authService.app.config import dev_config
+from app.config import dev_config
 
 
 def create_app() -> FastAPI:
