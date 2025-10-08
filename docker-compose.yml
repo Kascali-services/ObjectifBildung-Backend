@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  authservice:
+    build:
+      context: ./services/authService
+      dockerfile: Dockerfile
+    container_name: authservice
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./services/authService/.env
+    restart: unless-stopped
+    volumes:
+      - ./services/authService:/app
