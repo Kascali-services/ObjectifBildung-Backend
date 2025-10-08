@@ -28,7 +28,7 @@ jobs:
         run: |
           docker build \
             -f services/authService/Dockerfile \
-            -t ${{ secrets.DOCKERHUB_USERNAME }}/OB-authservice:latest \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/objectif-bildung-authservice:latest \
             services/authService
 
       - name: Push Docker image
