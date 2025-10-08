@@ -1,6 +1,9 @@
 version: '3.9'
 
 services:
+  # ========================
+  # AUTH SERVICE
+  # ========================
   authservice:
     build:
       context: ./services/authService
@@ -11,5 +14,54 @@ services:
     env_file:
       - ./services/authService/.env
     restart: unless-stopped
+    depends_on:
+      - redis
+    networks:
+      - backend
     volumes:
       - ./services/authService:/app
+
+  # ========================
+  # GATEWAY SERVICE
+  # ========================
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: gateway
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./gateway/.env
+    restart: unless-stopped
+    depends_on:
+      - authservice
+      - redis
+    networks:
+      - backend
+    volumes:
+      - ./gateway:/app
+
+  # ========================
+  # REDIS SERVER
+  # ========================
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - backend
+
+# ========================
+# NETWORKS & VOLUMES
+# ========================
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  redis_data:
