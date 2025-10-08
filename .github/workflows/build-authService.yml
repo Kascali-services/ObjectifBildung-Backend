@@ -1,0 +1,39 @@
+name: Build and Push AuthService Docker Image
+
+on:
+  workflow_run:
+    workflows: [ "Test AuthService" ]
+    types:
+      - completed
+
+jobs:
+  build-and-push:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}  # ← only when the tests run well
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -f services/authService/Dockerfile \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/OB-authservice:latest \
+            services/authService
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/OB-authservice:latest
+
+      # docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/OB-authservice:${{ github.sha }} ...
+
