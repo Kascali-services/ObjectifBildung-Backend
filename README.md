@@ -3,4 +3,4 @@ The backend repository of the "ObjectifBildung" project based on FastAPI
 
 ![AuthService Tests](https://github.com/Kascali-services/ObjectifBildung-Backend/actions/workflows/test-authService.yml/badge.svg)
 ![Build & Push](https://github.com/Kascali-services/ObjectifBildung-Backend/actions/workflows/build-authService.yml/badge.svg)
-
+![Build & Push Gateway](https://github.com/Kascali-services/ObjectifBildung-Backend/actions/workflows/build-gateway.yml/badge.svg)
