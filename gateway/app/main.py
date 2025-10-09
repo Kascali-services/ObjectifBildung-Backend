@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from slowapi.errors import RateLimitExceeded
-from slowapi.middleware import SlowAPIMiddleware
+from starlette.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
 from app.core.limiter import limiter
@@ -11,7 +11,13 @@ app = FastAPI(title="Gateway Service")
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, lambda r, e: e.response)
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.add_middleware(CacheMiddleware)
 app.include_router(gateway_router)
 
