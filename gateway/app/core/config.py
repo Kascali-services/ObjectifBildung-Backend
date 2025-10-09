@@ -19,7 +19,6 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"
-        extra = "ignore"  # ignore les variables non listées au lieu d’échouer
-
+        extra = "ignore"  # ignore unlisted variables instead of failing
 
 settings = Settings()
