@@ -80,3 +80,19 @@ def check_password_policy(password: str) -> tuple[bool, str | None]:
     #     return False, "Password must contain at least one digit."
 
     return True, None
+
+
+"""from starlette.middleware.base import BaseHTTPMiddleware
+from fastapi import Request, Response
+from fastapi.responses import JSONResponse
+
+class GatewayOnlyMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        # Vérifie si le header custom est présent
+        gateway_token = request.headers.get("X-Gateway-Token")
+        if gateway_token != "objectifbildung-secure":
+            return JSONResponse(
+                status_code=403,
+                content={"detail": "Access denied. Requests must go through Gateway."}
+            )
+        return await call_next(request)"""
