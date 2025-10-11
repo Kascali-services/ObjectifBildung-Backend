@@ -1,0 +1,29 @@
+from app.db.models import User
+from sqlalchemy.orm import Session
+from uuid import UUID
+
+def get_user_by_id(db: Session, user_id: UUID):
+    return db.query(User).filter(User.id == user_id).first()
+
+def get_user_by_auth_id(db: Session, auth_id: UUID):
+    return db.query(User).filter(User.auth_id == auth_id).first()
+
+def create_user_profile(db: Session, user_data: dict):
+    user = User(**user_data)
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+    return user
+
+def update_user_profile(db: Session, user_id: UUID, updates: dict):
+    user = get_user_by_id(db, user_id)
+    if not user:
+        return None
+    for key, value in updates.items():
+        setattr(user, key, value)
+    db.commit()
+    db.refresh(user)
+    return user
+
+def is_profile_complete(user: User) -> bool:
+    return all([user.first_name, user.last_name, user.country, user.city])
