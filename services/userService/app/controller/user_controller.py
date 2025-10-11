@@ -1,6 +1,8 @@
-from app.db.models import User
 from sqlalchemy.orm import Session
 from uuid import UUID
+
+from app.db.user_models import User
+
 
 def get_user_by_id(db: Session, user_id: UUID):
     return db.query(User).filter(User.id == user_id).first()
