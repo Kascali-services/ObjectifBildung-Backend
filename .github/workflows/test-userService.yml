@@ -1,0 +1,41 @@
+name: Test UserService
+
+on:
+  push:
+    paths:
+      - 'services/userService/**'
+  pull_request:
+    paths:
+      - 'services/userService/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('services/userService/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r services/userService/requirements.txt
+
+      - name: Run tests with pytest
+        run: |
+          pip install pytest pytest-cov
+          pytest services/userService/tests --maxfail=1 --disable-warnings -v --cov=services/userService/app --cov-report=term-missing

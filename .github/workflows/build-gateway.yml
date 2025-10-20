@@ -1,15 +1,14 @@
 name: Build and Push Gateway Docker Image
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_run:
+    workflows: [ "Test UserService" ]
+    types:
+      - completed
 
 jobs:
   build-and-push:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}  # ← only when the tests run well
     runs-on: ubuntu-latest
 
     steps:
