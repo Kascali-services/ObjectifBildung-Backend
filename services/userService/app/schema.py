@@ -14,11 +14,11 @@ class UserCreate(BaseModel):
 
 # Mise à jour du profil
 class UserUpdate(BaseModel):
-    first_name: Optional[str]
-    last_name: Optional[str]
-    country: Optional[str]
-    city: Optional[str]
-    language: Optional[str]
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    country: Optional[str] = None
+    city: Optional[str] = None
+    language: Optional[str] = None
 
 # Réponse complète
 class UserResponse(UserCreate):
