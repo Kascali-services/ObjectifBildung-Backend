@@ -1,4 +1,4 @@
-# app/controller/user_controller.py
+# app/controllers/user_controller.py
 from sqlalchemy.orm import Session
 from app.db import models
 from app.security import hash_password, verify_password, create_access_token, generate_reset_token, check_password_policy
