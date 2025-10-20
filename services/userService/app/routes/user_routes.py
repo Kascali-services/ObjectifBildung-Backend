@@ -3,12 +3,12 @@ from sqlalchemy.orm import Session
 from uuid import UUID
 
 from app.db.database import get_db
-from app.controller.user_controller import (
+from app.controllers.user_controller import (
     get_user_by_id,
     get_user_by_auth_id,
     create_user_profile,
-    update_user_profile,
-    is_profile_complete,
+    update_user_profile, is_profile_complete
+
 )
 from app.schema import UserResponse, UserCreate, UserUpdate, ProfileStatus
 
@@ -56,7 +56,7 @@ def get_user(user_id: UUID, db: Session = Depends(get_db)):
 # ==============================================================
 # Update user profile
 # ==============================================================
-@router.patch("/{user_id}", response_model=UserResponse)
+@router.patch("/{user_id}", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def update_user(user_id: UUID, request: UserUpdate, db: Session = Depends(get_db)):
     """
     Update a user's profile information.
